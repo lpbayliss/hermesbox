@@ -125,8 +125,9 @@ ENV PATH="/usr/local/bin:/home/hermes/.local/bin:${PATH}"
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY hermes-seed.sh /usr/local/bin/hermes-seed
 COPY hermes-gw.sh /usr/local/bin/hermes-gw
+COPY obsidian-sync.sh /usr/local/bin/obsidian-sync
 COPY config.seed.yaml /etc/hermes/config.seed.yaml
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/hermes-seed /usr/local/bin/hermes-gw
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/hermes-seed /usr/local/bin/hermes-gw /usr/local/bin/obsidian-sync
 
 WORKDIR /workspace
 

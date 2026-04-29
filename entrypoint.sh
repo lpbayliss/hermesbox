@@ -31,7 +31,8 @@ while IFS='=' read -r key val; do
     VOICE_TOOLS_OPENAI_KEY|HONCHO_API_KEY|GITHUB_TOKEN|\
     TELEGRAM_BOT_TOKEN|TELEGRAM_ALLOWED_USERS|TELEGRAM_HOME_CHANNEL|\
     DISCORD_BOT_TOKEN|SLACK_BOT_TOKEN|SLACK_APP_TOKEN|SLACK_ALLOWED_USERS|\
-    EMAIL_ADDRESS|EMAIL_PASSWORD|TINKER_API_KEY|WANDB_API_KEY|TZ)
+    EMAIL_ADDRESS|EMAIL_PASSWORD|TINKER_API_KEY|WANDB_API_KEY|TZ|\
+    OBSIDIAN_EMAIL|OBSIDIAN_PASSWORD|OBSIDIAN_VAULT|OBSIDIAN_VAULT_KEY)
       [ -n "$val" ] && printf 'export %s=%q\n' "$key" "$val" >> "$env_passthrough_script"
       ;;
   esac
@@ -47,6 +48,8 @@ if [ -f /home/hermes/.hermes/config.yaml ]; then
 fi
 
 sudo -u hermes -H bash -lc 'hermes-gw start' || echo "hermes-gw start failed (continuing)" >&2
+
+sudo -u hermes -H bash -lc 'obsidian-sync start' || echo "obsidian-sync start failed (continuing)" >&2
 
 echo "sshd starting on :22 (user: hermes)"
 exec /usr/sbin/sshd -D -e

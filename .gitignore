@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+.hermes/
+*.bak
+.DS_Store

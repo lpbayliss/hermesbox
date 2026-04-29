@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -6,7 +7,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HERMES_NONINTERACTIVE=1 \
     CURL_RETRY="--retry 5 --retry-delay 2 --retry-all-errors --connect-timeout 15"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=cache,target=/root/.npm,sharing=locked \
+    rm -f /etc/apt/apt.conf.d/docker-clean \
+    && apt-get update && apt-get install -y --no-install-recommends \
         git curl ca-certificates locales bash tini xz-utils gnupg \
         openssh-server sudo vim nano less tmux ripgrep fd-find jq tree fzf \
         bash-completion zoxide direnv build-essential python3 make unzip zip \
@@ -22,8 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get update && apt-get install -y --no-install-recommends gh \
     && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
-    && npm install -g @anthropic-ai/claude-code \
-    && rm -rf /var/lib/apt/lists/*
+    && npm install -g @anthropic-ai/claude-code
 
 RUN set -eux \
     && curl $CURL_RETRY -fsSL https://starship.rs/install.sh | sh -s -- -y -b /usr/local/bin
@@ -61,7 +65,8 @@ RUN set -eux \
     && tar -xzf /tmp/eza.tar.gz -C /usr/local/bin \
     && rm /tmp/eza.tar.gz
 
-RUN npm install -g obsidian-headless
+RUN --mount=type=cache,target=/root/.npm,sharing=locked \
+    npm install -g obsidian-headless
 
 RUN mkdir -p /var/run/sshd /etc/ssh/keys \
     && sed -i 's/#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config \

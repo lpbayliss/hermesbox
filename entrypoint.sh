@@ -42,5 +42,11 @@ if [ -n "${GH_PAT:-}" ]; then
   unset GH_PAT
 fi
 
+if [ -f /home/hermes/.hermes/config.yaml ]; then
+  sudo -u hermes -H bash -lc 'hermes-seed' || true
+fi
+
+sudo -u hermes -H bash -lc 'hermes-gw start' || echo "hermes-gw start failed (continuing)" >&2
+
 echo "sshd starting on :22 (user: hermes)"
 exec /usr/sbin/sshd -D -e

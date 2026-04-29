@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git curl ca-certificates locales bash tini xz-utils gnupg \
         openssh-server sudo vim nano less tmux ripgrep fd-find jq tree fzf \
         bash-completion zoxide direnv build-essential python3 make unzip zip \
-        wget htop procps iproute2 file tzdata libatomic1 \
+        wget htop procps iproute2 file tzdata libatomic1 ncurses-term \
     && locale-gen en_US.UTF-8 \
     && ln -s "$(command -v fdfind)" /usr/local/bin/fd \
     && mkdir -p -m 755 /etc/apt/keyrings \
@@ -123,7 +123,10 @@ USER root
 ENV PATH="/usr/local/bin:/home/hermes/.local/bin:${PATH}"
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY hermes-seed.sh /usr/local/bin/hermes-seed
+COPY hermes-gw.sh /usr/local/bin/hermes-gw
+COPY config.seed.yaml /etc/hermes/config.seed.yaml
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/hermes-seed /usr/local/bin/hermes-gw
 
 WORKDIR /workspace
 

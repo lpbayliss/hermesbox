@@ -6,6 +6,8 @@ if ! id hermes >/dev/null 2>&1; then
   exit 1
 fi
 
+chown -R hermes:hermes /home/hermes
+
 sudo -u hermes -H bash -lc '
   set -euo pipefail
   export HERMES_NONINTERACTIVE=1

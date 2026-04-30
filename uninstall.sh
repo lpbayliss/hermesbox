@@ -26,7 +26,6 @@ systemctl daemon-reload || true
 rm -f /etc/sudoers.d/90-hermes
 rm -f /etc/profile.d/zz-hermes-box.sh
 rm -f /etc/default/hermes
-rm -rf /etc/hermes
 
 if command -v npm >/dev/null 2>&1; then
   npm uninstall -g lefthook @anthropic-ai/claude-code obsidian-headless 2>/dev/null || true

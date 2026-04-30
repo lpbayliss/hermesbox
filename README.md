@@ -83,6 +83,25 @@ GitHub auth: `gh auth login` as the `hermes` user, or set `GITHUB_TOKEN` in `/et
 
 ---
 
+## 5. Bind mounts (optional)
+
+To back `/workspace` or `/vault` with host storage, add bind mounts after the LXC is up. Run on the **Proxmox host**:
+
+```bash
+mkdir -p /host/path
+chown -R 101000:101000 /host/path     # unpriv: LXC uid 1000 (hermes) → host 101000
+echo "mp0: /host/path,mp=/vault" >> /etc/pve/lxc/<vmid>.conf
+pct restart <vmid>
+```
+
+UID mapping for unprivileged LXCs:
+- LXC `root` (uid 0) → host uid 100000
+- LXC `hermes` (uid 1000) → host uid 101000
+
+Use `mp0`, `mp1`, etc. for multiple mounts.
+
+---
+
 ## How to Update
 
 ```bash

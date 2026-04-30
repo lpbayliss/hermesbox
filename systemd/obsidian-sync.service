@@ -1,0 +1,25 @@
+[Unit]
+Description=Obsidian vault continuous sync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+EnvironmentFile=-/etc/default/hermes
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=XDG_CONFIG_HOME=/home/hermes/.hermes/obsidian-config
+WorkingDirectory=/home/hermes
+ExecStartPre=/bin/sh -c '[ -n "$OBSIDIAN_EMAIL" ] && [ -n "$OBSIDIAN_PASSWORD" ] && [ -n "$OBSIDIAN_VAULT" ] && [ -n "$OBSIDIAN_VAULT_KEY" ] || { echo "obsidian-sync: required env missing"; exit 78; }'
+ExecStartPre=/bin/sh -c 'mkdir -p "$XDG_CONFIG_HOME" /vault'
+ExecStartPre=/bin/sh -c 'exec ob login --email "$OBSIDIAN_EMAIL" --password "$OBSIDIAN_PASSWORD"'
+ExecStartPre=/bin/sh -c 'ob sync-status --path /vault >/dev/null 2>&1 || exec ob sync-setup --vault "$OBSIDIAN_VAULT" --path /vault --password "$OBSIDIAN_VAULT_KEY"'
+ExecStart=/bin/sh -c 'exec ob sync --continuous --path /vault'
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

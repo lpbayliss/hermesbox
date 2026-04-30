@@ -43,7 +43,7 @@ cd /opt/hermesbox
 What you get:
 
 - `hermes` user, password-SSH enabled, `NOPASSWD: ALL` sudo, member of `adm` and `systemd-journal` (so `journalctl` works without sudo).
-- Tools: `git`, `gh`, `node 22`, `npm`, `claude`, `obsidian-headless` (`ob`), `lazygit`, `delta`, `eza`, `starship`, `zoxide`, `direnv`, `fzf`, `ripgrep`, `fd`, `jq`, `tmux`.
+- Tools: `git`, `gh`, `node 22`, `npm`, `lefthook`, `dotnet 8`, `godot 4.6.2 mono` (headless), `claude`, `obsidian-headless` (`ob`), `lazygit`, `delta`, `eza`, `starship`, `zoxide`, `direnv`, `fzf`, `ripgrep`, `fd`, `jq`, `tmux`.
 - `hermes-agent` installed under `/home/hermes/.local/bin`.
 - Two systemd units: `hermes-gw.service`, `obsidian-sync.service` (enabled, not started).
 - `/etc/default/hermes` seeded from `etc/default/hermes.example` (mode 0640, root:hermes).

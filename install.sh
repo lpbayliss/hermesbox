@@ -18,7 +18,10 @@ SCRIPTS=(
   scripts/00-base.sh
   scripts/user.sh
   scripts/node.sh
+  scripts/dotnet.sh
+  scripts/godot.sh
   scripts/gh.sh
+  scripts/lefthook.sh
   scripts/claude-code.sh
   scripts/obsidian-headless.sh
   scripts/starship.sh

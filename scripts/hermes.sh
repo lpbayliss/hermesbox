@@ -9,6 +9,7 @@ fi
 sudo -u hermes -H bash -lc '
   set -euo pipefail
   export HERMES_NONINTERACTIVE=1
+  export PATH="$HOME/.local/bin:$PATH"
   TMP="$(mktemp -d)"
   trap "rm -rf $TMP" EXIT
   curl -fsSL --retry 5 --retry-delay 2 --retry-all-errors \

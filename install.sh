@@ -23,6 +23,7 @@ export HERE
 SCRIPTS=(
   scripts/00-base.sh
   scripts/user.sh
+  scripts/shell.sh
   scripts/node.sh
   scripts/dotnet.sh
   scripts/godot.sh
@@ -36,7 +37,6 @@ SCRIPTS=(
   scripts/eza.sh
   scripts/hermes.sh
   scripts/ssh.sh
-  scripts/shell.sh
   scripts/services.sh
 )
 

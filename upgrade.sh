@@ -11,6 +11,7 @@ export HERE
 
 SCRIPTS=(
   scripts/00-base.sh
+  scripts/shell.sh
   scripts/node.sh
   scripts/dotnet.sh
   scripts/godot.sh
@@ -23,7 +24,6 @@ SCRIPTS=(
   scripts/delta.sh
   scripts/eza.sh
   scripts/hermes.sh
-  scripts/shell.sh
   scripts/services.sh
 )
 

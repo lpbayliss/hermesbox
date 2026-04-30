@@ -11,5 +11,20 @@ if [ ! -f /etc/default/hermes ]; then
   echo "seeded /etc/default/hermes (edit before starting services)"
 fi
 
+if [ -r /etc/default/hermes ]; then
+  TZ_VAL="$(awk -F= '/^TZ=/ {gsub(/"/,"",$2); print $2}' /etc/default/hermes)"
+  if [ -n "$TZ_VAL" ] && [ -d "/usr/share/zoneinfo/$TZ_VAL" ]; then
+    timedatectl set-timezone "$TZ_VAL" 2>/dev/null || true
+  fi
+fi
+
 systemctl daemon-reload
-systemctl enable hermes-gw.service obsidian-sync.service
+
+for u in hermes-gw.service obsidian-sync.service; do
+  state="$(systemctl is-enabled "$u" 2>/dev/null || echo unknown)"
+  if [ "$state" = "disabled" ]; then
+    echo "$u manually disabled — leaving as-is"
+  else
+    systemctl enable "$u"
+  fi
+done

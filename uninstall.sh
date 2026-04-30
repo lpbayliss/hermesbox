@@ -28,13 +28,17 @@ rm -f /etc/profile.d/zz-hermes-box.sh
 rm -f /etc/default/hermes
 rm -rf /etc/hermes
 
+if command -v npm >/dev/null 2>&1; then
+  npm uninstall -g lefthook @anthropic-ai/claude-code obsidian-headless 2>/dev/null || true
+fi
+
 apt-get remove -y gh nodejs git-delta dotnet-sdk-8.0 packages-microsoft-prod || true
 rm -f /etc/apt/sources.list.d/github-cli.list /etc/apt/sources.list.d/nodesource.list /etc/apt/sources.list.d/microsoft-prod.list
 rm -f /etc/apt/keyrings/githubcli-archive-keyring.gpg /etc/apt/keyrings/nodesource.gpg
 apt-get update || true
 
 rm -f /usr/local/bin/lazygit /usr/local/bin/eza /usr/local/bin/starship /usr/local/bin/godot
-rm -rf /usr/local/godot
+rm -rf /opt/godot
 
 if [ "$PURGE_DATA" -eq 1 ]; then
   rm -rf /workspace /vault /var/lib/bash-history

@@ -10,9 +10,9 @@ if ! dpkg -s packages-microsoft-prod >/dev/null 2>&1; then
     https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb \
     -o "$TMP/packages-microsoft-prod.deb"
   dpkg -i "$TMP/packages-microsoft-prod.deb"
-  apt-get update
 fi
 
+apt-get update
 apt-get install -y --no-install-recommends dotnet-sdk-8.0
 
 dotnet --version

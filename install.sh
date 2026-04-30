@@ -11,6 +11,12 @@ if [ ! -r /etc/os-release ] || ! grep -q '^ID=debian' /etc/os-release; then
   exit 1
 fi
 
+ARCH="$(dpkg --print-architecture 2>/dev/null || echo unknown)"
+if [ "$ARCH" != "amd64" ]; then
+  echo "install.sh targets amd64 only (detected: $ARCH)" >&2
+  exit 1
+fi
+
 HERE="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 export HERE
 
